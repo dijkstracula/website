@@ -1,0 +1,46 @@
+- title: "Cachekata: Memory Hierarchy Optimization via Dynamic Binary Translation"
+  year: "2013"
+  authors: "Nathan Taylor"
+  type: "thesis"
+  venue: "Msc. Thesis"
+  school: "UBC"
+  links:
+    - text: "PDF"
+      url: "https://circle.ubc.ca/handle/2429/44335"
+
+- title: "Whose Cacheline is it Anyway: Operating System Support for Live Detection & Repair of False Sharing"
+  year: "2013"
+  authors: "M. Nanavati, M. Spear, N. Taylor, S. Rajagopalan, D. T. Meyer, W. Aiello, A. Warfield"
+  type: "conference"
+  venue: "ASPLOS"
+  school: "UBC"
+  links:
+    - text: "PDF"
+      url: "https://www.cs.ubc.ca/~mihirn/papers/plastic-eurosys.pdf"
+
+- title: "Debugging Through Time with the Tralfamadore Debugger"
+  year: "2012"
+  authors: "C. C. D. Head, G. Lefebre, M. Spear, N. Taylor, A. Warfield"
+  type: "workshop"
+  venue: "RESoLVE"
+  school: "UBC"
+  links:
+    - text: "PDF"
+      url: "http://www.dcs.gla.ac.uk/conferences/resolve12/papers/session4_paper1.pdf"
+
+- title: "Herbert West: Deanonymizer"
+  year: "2011"
+  authors: "M. Nanavati, N. Taylor, W. Aiello, A. Warfield"
+  type: "workshop"
+  venue: "HotSec"
+  school: "UBC"
+  links:
+    - text: "PDF"
+      url: "https://www.usenix.org/legacy/event/hotsec11/tech/final_files/Nanavati.pdf"
+
+- title: "Iodine: Interactive Program Partitioning"
+  year: "2010"
+  authors: "N. Taylor, A. Warfield"
+  type: "poster"
+  venue: "OSDI"
+

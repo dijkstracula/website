@@ -1,0 +1,43 @@
+{{ define "main" }}
+<div class="container">
+    {{ .Content }}
+
+    <h3>Conference papers</h3>
+    
+    <div class="paper-list">
+    <ul>
+        {{ range where .Site.Data.papers "type" "eq" "conference"}}
+        {{ partial "paper.html" . }}
+        {{ end }}
+    </ul>
+    </div>
+
+    <h3>Workshop papers</h3>
+    <div class="paper-list">
+    <ul>
+        {{ range where .Site.Data.papers "type" "eq" "workshop"}}
+        {{ partial "paper.html" . }}
+        {{ end }}
+    </ul>
+    </div>
+    
+    <h3>Posters</h3>
+    <div class="paper-list">
+    <ul>
+        {{ range where .Site.Data.papers "type" "eq" "poster"}}
+        {{ partial "paper.html" . }}
+        {{ end }}
+    </ul>
+    </div>
+
+    <h3>Theses</h3>
+    <div class="paper-list">
+    <ul>
+        {{ range where .Site.Data.papers "type" "eq" "thesis"}}
+        {{ partial "paper.html" . }}
+        {{ end }}
+    </ul>
+    </div>
+
+</div>
+{{ end }}

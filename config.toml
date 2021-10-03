@@ -1,0 +1,41 @@
+baseURL = 'http://cs.utexas.edu/~ntaylor/'
+languageCode = 'en-ca'
+title = 'Nathan Taylor'
+theme = 'researcher'
+
+
+[params]
+    author = "Nathan Taylor"
+    description = "academic webzone"
+    favicon = "favicon.ico"  # path to a .ico to use as favicon
+    logo = ""  # url or path to a logo to put in the header
+
+    custom_css = [""]
+    [params.style]  # appearance options (can be omitted)
+        fontFamily = "Inconsolata"
+        fontSize = "18pt"
+        pageWidth = "1250px"
+        avatarSize = "90px"
+        colorBlack = "#222222"
+        colorRed = "#dc3545"
+
+[menu]
+    [[menu.main]]
+    name = "About"
+    url = "/about"
+    weight = 1
+    [[menu.main]]
+    name = "Research"
+    url = "/papers"
+    weight = 2
+    [[menu.main]]
+    name = "Talks"
+    url = "/talks"
+    weight = 3
+    [[menu.main]]
+    name = "Teaching"
+    url = "/teaching"
+    weight = 4
+
+    [markup.goldmark.renderer]
+    unsafe = true  # allow raw HTML in markdown files

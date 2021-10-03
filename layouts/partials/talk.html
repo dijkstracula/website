@@ -1,0 +1,12 @@
+<div class="talk">
+    <div class="talk-title">{{ .title }}</div>
+    <div class="talk-venue"> {{ .venue }} {{ .year }}</div>
+    <div class="talk-description"> {{ .description }}</div>
+    <ul class="talk-links">
+        {{ range .links }}
+        <li>
+            <a href={{ .url }}>{{ .text }}</a>
+        </li>
+        {{ end }}
+    </ul>
+</div>

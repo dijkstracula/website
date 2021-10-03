@@ -1,0 +1,13 @@
+<div class="paper">
+    <div class="paper-title">{{ .title }}</div>
+    <div class="paper-authors"> {{ .authors }}</div>
+    <div class="paper-venue"> {{ .venue }} {{ .year }}
+    <ul class="paper-links">
+        {{ range .links }}
+        <li>
+            <a href={{ .url }}>{{ .text }}</a>
+        </li>
+        {{ end }}
+    </ul>
+    </div>
+</div>

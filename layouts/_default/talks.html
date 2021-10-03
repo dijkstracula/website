@@ -1,0 +1,14 @@
+{{ define "main" }}
+<div class="container">
+    {{ .Content }}
+
+    <div class="talk-list">
+    <ul>
+        {{ range .Site.Data.talks }}
+        {{ partial "talk.html" . }}
+        {{ end }}
+    </ul>
+    </div>
+
+</div>
+{{ end }}
