@@ -44,6 +44,7 @@ made a good choice!
 ### UBC
 
 For UBC's then-brand new [Racket-based introductory CS
-course](https://sites.google.com/site/ubccpsc110/), I taught lab sessions, held
-scheduled office hours, and on occasion, lectured during instructor absences.
-For my work I was awarded a graduate TA award by the University (a gold star!)
+course](https://web.archive.org/web/20090918115923/http://sites.google.com/site/ubccpsc1102009w1/),
+I taught lab sessions, held scheduled office hours, and on occasion, lectured
+during instructor absences.  For my work I was awarded a graduate TA award by
+the University (a gold star!)
