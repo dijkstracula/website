@@ -12,9 +12,9 @@ with [James Bornholt](https://cs.utexas.edu/~bornholt/) on applying formal
 methods to concurrent and distributed systems.
 
 Prior to joining UT, I lived in beautiful [Oakland,
-CA](https://localwiki.org/oakland/), where I hacked on low-level systems at
-some companies that you may have heard of.  Outside of Silicon Valley, I worked
-as a software developer for [MSR
+CA](https://localwiki.org/oakland/), where I hacked on low-level systems and
+infrastructure at some companies that you may have heard of.  Outside of
+industry, I worked as a contract software developer for [MSR
 NYC](https://www.microsoft.com/en-us/research/theme/ai-for-systems/) and served
 as a sessional lecturer at [Macewan
 University](https://www.macewan.ca/academics/academic-departments/computer-science/)
