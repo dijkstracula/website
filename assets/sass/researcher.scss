@@ -5,6 +5,7 @@ $avatar-size: {{ .Param "style.avatarSize" | default "90px;" }};
 // Colors
 $black: {{ .Param "style.colorBlack" | default "#222222" }};
 $red: {{ .Param "style.colorRed" | default "#dc3545" }};
+$green: {{ .Param "style.colorGreen" | default "#009900" }};
 
 // Font
 $font-family: {{ .Param "style.fontFamily" | default "Inconsolata" }};
@@ -17,13 +18,13 @@ $y-medium: 1.0rem;
 
 // Placeholders
 %link-default {
-    color: $red;
+    color: $green;
     text-decoration: none;
     & * {
-        color: $red;
+        color: $green;
     }
     &:hover {
-        color: $red;
+        color: $green;
         text-decoration: underline;
     }
 }
@@ -84,7 +85,6 @@ $y-medium: 1.0rem;
         max-width: 100%;
     }
     .avatar > img {
-        border-radius: 50%;
         float: right;
         margin: -8px 0 0 16px;
         height: $avatar-size;

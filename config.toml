@@ -15,9 +15,10 @@ theme = 'researcher'
         fontFamily = "Inconsolata"
         fontSize = "18pt"
         pageWidth = "1250px"
-        avatarSize = "90px"
+        avatarSize = "250px"
         colorBlack = "#222222"
         colorRed = "#dc3545"
+        colorGreen = "#009900"
 
 [menu]
     [[menu.main]]
