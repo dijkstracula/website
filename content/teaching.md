@@ -11,21 +11,23 @@ excuse to return to the front of the class.
 
 ### MacEwan University
 
-At MacEwan, I was a lecturer and lab instructor in the Department of Computing
-Science.  I redesigned _CMPT 220: Unix, Scripting, and Other Tools_, which
-hitherto had mostly been a course reiterating first-year programming exercises
-in Bash, with the goal of covering as many upper-level OS concepts in a _de
-facto_ introductory course.  It turns out: we were able to dig deep into
-material as diverse as the process lifecycle, signals, containerization, binary
-exploitation, and metaprogramming using straightforward Unix primitives!  [The
-course
+At MacEwan, I was a lecturer and lab instructor in the [Department of Computer
+Science](https://www.macewan.ca/academics/academic-departments/computer-science/).
+I redesigned _CMPT 220: Unix, Scripting, and Other Tools_, which hitherto had
+mostly been a course regurgitating first-year programming exercises in Bash. My
+goal with CMPT 220 was to see how many topics usually relegated to upper-level
+operating systems courses could be effectively covered in a _de facto_
+introductory course with minimal prerequisites.  It turns out: we were able to
+dig deep into material as diverse as the process lifecycle, signals,
+containerization, binary exploitation, and metaprogramming using the usual
+straightforward Unix primitives!  [The course
 material](https://docs.google.com/document/d/1a8YYcprmNUiA61SuZvRFcw7IshJ7ETLYiqlyteu8_tw/edit)
 was well-received by students, and even made the rounds on certain colour-coded
 tech aggregator websites, which was pretty cool.
 
 Additionally, I developed a streamlined summer curriculum for _CMPT 201:
-Practical Programming Methodology_, the introductory C language course.  201
-has the unfortunate reputation among students of being a "weed-out" course,
+Practical Programming Methodology_, the introductory C language course.  CMPT
+201 has the unfortunate reputation among students of being a "weed-out" course,
 and the accelerated schedule in the summer term doesn't help matters.  To that
 end, I dropped the ancient, overpriced textbook in favour of a [free, modern C
 resource](https://beej.us/guide/bgc/pdf/bgc_usl_c_1.pdf), corrected numerous
