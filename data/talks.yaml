@@ -1,6 +1,6 @@
 - title: "ELF Off the Shelf"
   date: "January 2020"
-  description: "A guest lecture introducing the ELF file format and dynamic linking to undergraduate CS students"
+  description: "A guest lecture introducing the ELF file format and dynamic linking to undergraduate CS students."
   links:
     - text: "Slides"
       url: "https://docs.google.com/presentation/d/1Wq04wgdS9WCtuBN0AFwbROfSWBUKvqtlA_XTg--63QI/edit?usp=sharing"
@@ -14,7 +14,7 @@
 
 - title: "Let's build a HyperCard RPG!"
   date: "2017"
-  description: "My foray into livestreaming."
+  description: "My first foray into livestreaming."
   links:
     - text: "Videos"
       url: "https://www.youtube.com/playlist?list=PLx6EMLhWVEMax9EMFwcfSnCMi7lFJrVNF"
@@ -30,7 +30,7 @@
 - title: "Beyond Breakpoints: A Tour of Dynamic Analysis"
   venue: "QCon NYC"
   date: "2016"
-  description: "I introduced techniques for runtime program analysis and introspection."
+  description: "I introduced techniques from the research community for runtime program analysis, debugging, and introspection."
   links:
   - text: "Materials"
     url: "https://github.com/dijkstracula/QConNYC2016/"
@@ -50,7 +50,7 @@
 - title: "Racing To Win: Correct Concurrency with Race Conditions"
   venue: "Surge"
   date: "2015"
-  description: "An introduction to lock-free programming, co-authored with a work colleague."
+  description: "An introduction to concurrency and lock-free programming, co-authored with a work colleague."
   links:
   - text: "Materials"
     url: "https://github.com/dijkstracula/Surge2015"
@@ -60,7 +60,7 @@
 - title: "Your Computer Is Already A Distributed System, Why Isn't Your OS?"
   venue: "Papers We Love SF"
   date: "March 2014"
-  description: "In this talk I walked the crowed through the Barrelfish paper."
+  description: "In this talk I presented the Barrelfish operating system to an audience of industrial software developers."
   links:
   - text: "Event page"
     url: "http://www.meetup.com/papers-we-love-too/events/212148242/"
