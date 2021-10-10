@@ -2,7 +2,10 @@
 title = "About"
 +++
 
+
 ## About me
+
+{{<figure class="avatar" src="/~ntaylor/me.jpg" alt="">}}
 
 I'm a PhD student at [UT Austin](https://www.cs.utexas.edu/), where I'm working
 with [James Bornholt](https://cs.utexas.edu/~bornholt/) on applying formal
