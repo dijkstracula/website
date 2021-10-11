@@ -14,6 +14,7 @@
   type: "conference"
   venue: "EuroSys"
   school: "UBC"
+  desc: "We combined a bunch of inference from CPU performance counters with some gory binary rewriting to move highly and falsely-contented memory regions onto their own cachelines.  The latter half of this system made up my M.Sc. thesis work."
   links:
     - text: "PDF"
       url: "https://www.cs.ubc.ca/~mihirn/papers/plastic-eurosys.pdf"
@@ -34,6 +35,7 @@
   type: "workshop"
   venue: "HotSec"
   school: "UBC"
+  desc: "What started as a joke at the pub one night turned into a fun workshop paper, where we applied the most naive ML techniques imaginable to reverse-engineer the identities of CS conference paper reviewers from public sources.  At least one reviewer was not amused by the final line in our acknowledgements section!"
   links:
     - text: "PDF"
       url: "https://www.usenix.org/legacy/event/hotsec11/tech/final_files/Nanavati.pdf"
@@ -43,4 +45,4 @@
   authors: "N. Taylor, A. Warfield"
   type: "poster"
   venue: "OSDI"
-
+  desc: "Building off a course project, this poster motivated an end-to-end program analysis system for discovering code gadgets in an unannotated blob binary by combining both automated and human-driven techniques."

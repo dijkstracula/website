@@ -6,7 +6,7 @@ layout = "papers"
 I am interested in the implementation of, and design of abstractions for,
 highly concurrent and distributed systems.
 
-Systems software is judged by whether it presents an _efficient, explainable,
+Computers systems are judged by whether they present an _efficient, explainable,
 and reliable_ view of the layers underneath it to the levels above. Any
 high-level developer will struggle to produce correct and efficient application
 software should their systems programmer compatriots fail to build the
@@ -25,5 +25,5 @@ believe that the path out of the "efficient, explainable, reliable: pick two"
 tarpit necessitates adopting formalisms and mechanized proof techniques from
 the formal methods and programming languages community.
 
-Here's some of the research I've published.
+Here's some of the research I've published, in this space and others:
 
