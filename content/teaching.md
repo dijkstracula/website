@@ -3,32 +3,32 @@ title = "Teaching"
 +++
 
 Before joining UT, I was a sessional instructor and TA at various universities
-in Canada.  As I'm funded as a graduate research assistant by my advisor I've
-not been involved with any teaching at UT, but I hope to one day find the
+in Canada.  As I'm working as a graduate research assistant with my advisor
+I've not been involved with any teaching at UT, but I hope to one day find the
 excuse to return to the front of the class.
 
 ## Ancient history
 
 ### MacEwan University
 
-At MacEwan, I was a lecturer and lab instructor in the [Department of Computer
+At MacEwan, I was an instructor in the [Department of Computer
 Science](https://www.macewan.ca/academics/academic-departments/computer-science/).
-I redesigned _CMPT 220: Unix, Scripting, and Other Tools_, which hitherto had
-mostly been a course regurgitating first-year programming exercises in Bash. My
-goal with CMPT 220 was to see how many topics usually relegated to upper-level
-operating systems courses could be effectively covered in a _de facto_
+I redesigned _CMPT 220: Unix, Scripting, and Other Tools_, a course that
+hitherto had mostly been regurgitating first-year programming exercises in
+Bash. My goal with the new curriculum was to push as many topics usually
+relegated to upper-level operating systems courses into a _de facto_
 introductory course with minimal prerequisites.  It turns out: we were able to
-dig deep into material as diverse as the process lifecycle, signals,
+dig deeply into concepts as diverse as the process lifecycle, signals,
 containerization, binary exploitation, and metaprogramming using the usual
 straightforward Unix primitives!  [The course
 material](https://docs.google.com/document/d/1a8YYcprmNUiA61SuZvRFcw7IshJ7ETLYiqlyteu8_tw/edit)
 was well-received by students, and even made the rounds on certain colour-coded
-tech aggregator websites, which was pretty cool.
+tech aggregator websites, which was pretty cool to see.
 
-Additionally, I developed a streamlined summer curriculum for _CMPT 201:
-Practical Programming Methodology_, the introductory C language course.  CMPT
-201 has the unfortunate reputation among students of being a "weed-out" course,
-and the accelerated schedule in the summer term doesn't help matters.  To that
+I also developed a streamlined summer curriculum for _CMPT 201: Programming
+Methodology_, the introductory C language course.  CMPT 201 has the unfortunate
+reputation among students of being the "weed-out" course, and the accelerated
+schedule in the summer term doesn't help student learning nor anxiety.  To that
 end, I dropped the ancient, overpriced textbook in favour of a [free, modern C
 resource](https://beej.us/guide/bgc/pdf/bgc_usl_c_1.pdf), corrected numerous
 inaccuracies in the existing course material (ranging from implicit but
@@ -36,15 +36,17 @@ harmless reliance on undefined behaviour up to total falsehoods), and exised
 any material that stood in the way of students becoming formidable systems
 programmers.
 
+Lastly, I worked with the instructor of _CMPT 360: Introduction to Operating
+Systems_ on a new sequence of labs and assignments.
+
 ### University of Toronto
 
-At the start of the pandemic I was hired to teach [CSC324: Principles of
-Programming Languages](http://individual.utoronto.ca/nbtaylor/csc324_s2020) at
-the University of Toronto (a different UT!).  This was my first time teaching
-a course entirely on my own; but, seeing as how feedback from students included
-_"You are one of the best professors I had in three years at the UofT. Thank
-you for explaining the materials so well"_, I like to think that the university
-made a good choice!
+I was brought on to teach a last-minute summer offering of [CSC324: Principles
+of Programming Languages](http://individual.utoronto.ca/nbtaylor/csc324_s2020)
+at the University of Toronto (a different UT!).  This was my first time
+teaching a course entirely on my own; but, seeing as how feedback from students
+included _"You are one of the best professors I had in three years at the U of
+T"_, I like to think that the university made a good choice!
 
 ### UBC
 
