@@ -8,8 +8,9 @@ title = "About"
 {{<figure class="avatar" src="/~ntaylor/me.jpg" alt="">}}
 
 I'm a PhD student at [UT Austin](https://www.cs.utexas.edu/), where I'm working
-with [James Bornholt](https://cs.utexas.edu/~bornholt/) on applying formal
-methods to concurrent and distributed systems.
+with [James Bornholt](https://cs.utexas.edu/~bornholt/) and [Ken
+McMillan](http://mcmil.net/wordpress/) on applying formal methods to concurrent
+and distributed systems.
 
 Prior to joining UT, I lived in beautiful [Oakland,
 CA](https://localwiki.org/oakland/), where I scaled low-level systems and
