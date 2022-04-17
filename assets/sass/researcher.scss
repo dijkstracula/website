@@ -212,3 +212,27 @@ $y-medium: 1.0rem;
     }
 }
 
+.post-list-title {
+    font-weight: 600;
+}
+
+.post-list {
+    ul {
+        padding: 0;
+        margin-bottom: 1em;
+    }
+    li {
+        list-style: none;
+        display: inline;
+        padding: 0;
+        margin: 0;
+        padding-left: 0rem !important;
+    }
+    li:after {
+        content: "| ";
+    }
+    li:last-child:after {
+        content: "";
+    }
+}
+
