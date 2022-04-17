@@ -13,14 +13,12 @@ excuse to return to the front of the class.
 
 At MacEwan, I was an instructor in the [Department of Computer
 Science](https://www.macewan.ca/academics/academic-departments/computer-science/).
-I redesigned _CMPT 220: Unix, Scripting, and Other Tools_, a course that
-hitherto had mostly been regurgitating first-year programming exercises in
-Bash. My goal with the new curriculum was to push as many topics usually
-relegated to upper-level operating systems courses into a _de facto_
-introductory course with minimal prerequisites.  It turns out: we were able to
-dig deeply into concepts as diverse as the process lifecycle, signals,
-containerization, binary exploitation, and metaprogramming using the usual
-straightforward Unix primitives!  [The course
+I redesigned _CMPT 220: Unix, Scripting, and Other Tools_. My goal was to push
+as many topics usually relegated to upper-level operating systems courses into
+a _de facto_ introductory course with minimal prerequisites.  It turns out: we
+were able to dig deeply into concepts as diverse as the process lifecycle,
+signals, containerization, binary exploitation, and metaprogramming using the
+usual straightforward Unix primitives!  [The course
 material](https://docs.google.com/document/d/1a8YYcprmNUiA61SuZvRFcw7IshJ7ETLYiqlyteu8_tw/edit)
 was well-received by students, and even made the rounds on certain colour-coded
 tech aggregator websites, which was pretty cool to see.
@@ -31,10 +29,8 @@ reputation among students of being the "weed-out" course, and the accelerated
 schedule in the summer term doesn't help student learning nor anxiety.  To that
 end, I dropped the ancient, overpriced textbook in favour of a [free, modern C
 resource](https://beej.us/guide/bgc/pdf/bgc_usl_c_1.pdf), corrected numerous
-inaccuracies in the existing course material (ranging from implicit but
-harmless reliance on undefined behaviour up to total falsehoods), and exised
-any material that stood in the way of students becoming formidable systems
-programmers.
+inaccuracies in the existing course material, and exised any material that
+stood in the way of students becoming formidable systems programmers.
 
 Lastly, I worked with the instructor of _CMPT 360: Introduction to Operating
 Systems_ on a new sequence of labs and assignments.
