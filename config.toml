@@ -1,4 +1,4 @@
-baseURL = 'http://cs.utexas.edu/~ntaylor/'
+baseURL = 'https://cs.utexas.edu/~ntaylor/'
 languageCode = 'en-ca'
 title = 'Nathan Taylor'
 theme = 'researcher'

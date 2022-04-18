@@ -87,6 +87,7 @@ associated with an object - since it doesn't make sense to use classes for this
 particular problem these ones won't be.
 
 {{< manualcode >}}
+</span></span><span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
 <span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">ret</span> <span class="o">:=</span> <span class="kc">new</span> <span class="kc">string</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span> <span class="c1">// the `ret` variable is the one returned to the caller.
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
