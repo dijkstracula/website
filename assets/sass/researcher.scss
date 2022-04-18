@@ -1,3 +1,5 @@
+@import "code";
+
 // Sizes
 $max-width: {{ .Param "style.pageWidth" | default "750px;" }};
 $avatar-size: {{ .Param "style.avatarSize" | default "90px;" }};
@@ -139,14 +141,15 @@ $y-medium: 1.0rem;
         padding: 8px 8px;
     }
     code {
-        color: $black;
-        background-color: #f8f8f8;
-        border: 1px solid #cccccc;
-        border-radius: 10%;
-        padding: 0px 4px;
+        padding: 0px 0px;
+        white-space: nowrap;
     }
-    pre code {
-        all: unset;
+    pre {
+        padding: 4px 4px;
+        border: 1px solid #cccccc;
+        code {
+            all: unset;
+        }
     }
     .highlight {
         margin: $y-medium auto;
@@ -212,11 +215,41 @@ $y-medium: 1.0rem;
     }
 }
 
-.post-list-title {
-    font-weight: 600;
+.blog {
+    .title {
+        margin: 0;
+        font-size: 145%;
+    }
 }
 
-.post-list {
+
+.blog-list {
+    p {
+        padding: 0;
+        margin: 0;
+    }
+
+    pre {
+        background: #eeeeee;
+        white-space: pre-wrap;
+        line-height: 1.0;
+    }
+
+    .date {
+        //color: #666666;
+        font-size: 17px;
+        font-weight: 400;
+        margin-top: 0 !important;
+    }
+
+    .title {
+        font-weight: 600;
+    }
+
+    .oneliner {
+        font-style: italic;
+    }
+
     ul {
         padding: 0;
         margin-bottom: 1em;
@@ -229,10 +262,9 @@ $y-medium: 1.0rem;
         padding-left: 0rem !important;
     }
     li:after {
-        content: "| ";
+        content: ", ";
     }
     li:last-child:after {
         content: "";
     }
 }
-

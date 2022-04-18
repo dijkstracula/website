@@ -1,0 +1,25 @@
+{{ define "main" }}
+<div class="container">
+    {{ .Content }}
+
+    {{ range .Pages }}
+    <div class="blog-list">
+        <ul>
+            <div class="blog-list-item">
+                <span class="title"><a href="{{.Permalink}}">{{ .Params.title }}</a></span>
+                <div class="date">{{ .Params.date.Format "2 Jan 2006" | }}</div>
+                <div class="oneliner">
+                    {{ .Params.oneliner }}
+                </div>
+                <ul class="blog-list-tags">
+                    Tags: 
+                    {{ range .Params.tags }}
+                    <li>{{ . }}</li>
+                    {{ end }}
+                </ul>
+            </div>
+        </ul>
+    </div>
+    {{ end }}
+</div>
+{{ end }}

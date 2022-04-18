@@ -3,6 +3,14 @@ languageCode = 'en-ca'
 title = 'Nathan Taylor'
 theme = 'researcher'
 
+[markup]
+  [markup.highlight]
+    guessSyntax = false
+    lineNoStart = 1
+    lineNos = false
+    lineNumbersInTable = true
+    style = 'solarized-light'
+    tabWidth = 4
 
 [params]
     author = "Nathan Taylor"
@@ -11,7 +19,8 @@ theme = 'researcher'
     logo = ""  # url or path to a logo to put in the header
 
     custom_css = [""]
-    [params.style]  # appearance options (can be omitted)
+
+[params.style]  # appearance options (can be omitted)
         fontFamily = "Inconsolata"
         fontSize = "18pt"
         pageWidth = "1250px"
@@ -42,5 +51,5 @@ theme = 'researcher'
     url = "/teaching"
     weight = 5
 
-    [markup.goldmark.renderer]
+[markup.goldmark.renderer]
     unsafe = true  # allow raw HTML in markdown files

@@ -1,0 +1,11 @@
+{{ define "main" }}
+<div class="container">
+    <div class="blog">
+        <div class="title">{{ .Title }}</div>
+        <div class="date">{{ .Params.date.Format "2 Jan 2006" }}</div>
+        <div class="oneliner">{{ .Params.oneliner }}</div>
+        <hr/>
+        {{ .Content }}
+    </div>
+</div>
+{{ end }}
