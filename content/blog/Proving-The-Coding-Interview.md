@@ -12,8 +12,9 @@ Enjoying programming interview questions is one of those things that nobody
 should admit to in polite company.  But as with so many other things in life, a
 good gimmick can make the most tedious chore bearable if not outright pleasant.
 And if you're a grad student and can use that chore as a procrastination
-tactic, then all the better! (Sorry, [James](cs.utexas.edu/~bornholt/), if
-you're reading this, I'll get on whatever it is tomorrow!)
+tactic, then all the better! (Sorry,
+[James](https://www.cs.utexas.edu/~bornholt/), if you're reading this, I'll get
+on whatever it is tomorrow!)
 
 As it happens, it's summer internship interview season, and with a new set of
 interview loops comes a need for yet another gimmick.  This time, I figured:
@@ -31,7 +32,7 @@ make briefly interesting.
 
 I can't think of an interview problem that's both as widely popular and yet
 wildly uninteresting as [FizzBuzz](https://en.wikipedia.org/wiki/Fizz_buzz).
-The problem's arbitrary and divorced from any real usecases, it's never
+The problem's arbitrary and divorced from any real use-cases, it's never
 terribly satisfying to implement, and is fiddly enough that it's easy to trip
 over an off-by-one error or incorrect if/else statement.  It's the poster child
 for misguided tech company interviews, and yet I've actually been asked it before!
@@ -42,7 +43,7 @@ Okay, here's the Fizzbuzz problem:
 Print `n` lines of output, where:
 
 1) Every third line (unless it's a multiple of 15) reads "fizz";
-2) Every fifth line (unless it's a muliple of 15) reads "buzz";
+2) Every fifth line (unless it's a multiple of 15) reads "buzz";
 3) Every fifteenth line reads "fizzbuzz";
 4) Every other line should read the number of lines previously printed out.
 ```
@@ -217,8 +218,8 @@ Of course, in this case, we won't actually know until the program is running
 that something went wrong.  It's far better to know beforehand than hope for
 the best and wait for your program to crash in production!
 
-We can start to see that Dafny is doing something similar but at compiletime:
-we thread facts through our program using `requres` and `ensures` statements,
+We can start to see that Dafny is doing something similar but at compile-time:
+we thread facts through our program using `requires` and `ensures` statements,
 which it uses to prove to itself, and us, that there are no situations where
 something _could_ go wrong.  
 
@@ -311,11 +312,11 @@ This of course makes sense: we haven't actually implemented the algorithm yet.
 Just like how in test-driven development we'd expect our unit tests to
 initially all fail, we similarly expect our specification to not match the
 implementation.  And just like in the TDD model, we'll know when we've got
-a working `Fizzbuzz()` solution: when Dafny verificaiton begins to succeed!
+a working `Fizzbuzz()` solution: when Dafny verification begins to succeed!
 
 ## Loop invariants and our first implementation
 
-Let's implement the core `Fizzbuzz()` logic.  Since Dafny's a straighforward
+Let's implement the core `Fizzbuzz()` logic.  Since Dafny's a straightforward
 imperative programming language, we can implement it just like we would in Java
 or C#.  There are many different possible implementations but I'm going to stick
 with one that very closely resembles the specification: since the spec gives us
@@ -454,7 +455,7 @@ final specification and implementation looks as follows:
 This is enough for Dafny to be convinced that our postconditions are satisfied:
 after the final loop iteration, `j == n`, which perfectly matches our actual
 specification!  We have, at long last, an implementation that Dafny has proven
-satisifies our specification, and so we're able to generate executable code
+satisfies our specification, and so we're able to generate executable code
 from our program!
 
 ```bash
@@ -471,7 +472,7 @@ I've never been a good test-taker and one of my favourite things about grad
 school is that, generally, the only classes that would make me write exams
 are the ones I wouldn't want to take anyway.  Let's imagine my nerves had
 gotten the better of me and that I'd made a silly mistake in my implementation:
-here's a mistake I make figuratively-literaly every time I write a
+here's a mistake I make figuratively-literally every time I write a
 `while`-loop: I simply forget to bump the loop counter.  If I take out that `j
 := j + 1` statement and recompile, Dafny tells us that it isn't sure that our
 loop will ever actually terminate:
@@ -633,7 +634,7 @@ modifications actually changed the program semantics, and if your test suite
 isn't comprehensive then maybe you've introduced a bug.  
 
 The good news is that Dafny can still prove that this gnarlier implementation
-satisifes our existing set of straighgforward postconditions and loop
+satisfies our existing set of straightforward postconditions and loop
 invariants!  And if we got it wrong -- say, if I wrote `else if (j % 5 == 0)`
 -- then the compiler would tell us that we broke our solution and we could ask
 it for a counterexample!
@@ -689,7 +690,7 @@ interview question in its own right!!
 Eagle-eyed readers may notice that our specification of fizzbuzz slightly
 deviates from the standard one: typically, `Fizzbuzz(n)` iterates on `[1, n+1)`,
 so the beginning lines read "1", "2", "fizz", and so on, but we iterate from
-`[0, n)`, so our final implemenation will begin with "fizzbuzz", "1", "2", ...
+`[0, n)`, so our final implementation will begin with "fizzbuzz", "1", "2", ...
 Why not try installing Dafny (there's a good installation guide
 [here](https://www.cs.utexas.edu/~bornholt/courses/cs395t-22sp/homework/hw4/))
 and try your hand at changing first the specification, then the implementation?
