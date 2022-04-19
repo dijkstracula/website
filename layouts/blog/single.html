@@ -1,9 +1,9 @@
 {{ define "main" }}
 <div class="container">
     <div class="blog">
-        <div class="title">{{ .Title }}</div>
-        <div class="date">{{ .Params.date.Format "2 Jan 2006" }}</div>
-        <div class="oneliner">{{ .Params.oneliner }}</div>
+        <h1><div class="title">{{ .Title }}</div></h1>
+        <span class="date">{{ .Params.date.Format "2 Jan 2006" }}</span> | 
+        <span class="oneliner">{{ .Params.oneliner }}</span>
         <hr/>
         {{ .Content }}
     </div>

@@ -21,13 +21,13 @@ theme = 'researcher'
     custom_css = [""]
 
 [params.style]  # appearance options (can be omitted)
-        fontFamily = "Inconsolata"
-        fontSize = "18pt"
-        pageWidth = "1250px"
-        avatarSize = "250px"
-        colorBlack = "#222222"
-        colorRed = "#dc3545"
-        colorGreen = "#009900"
+    fontFamily = "Inconsolata"
+    fontSize = "12pt"
+    pageWidth = "800px"
+    avatarSize = "250px"
+    colorBlack = "#222222"
+    colorRed = "#dc3545"
+    colorGreen = "#009900"
 
 [menu]
     [[menu.main]]

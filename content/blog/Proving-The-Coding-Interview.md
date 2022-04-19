@@ -628,10 +628,11 @@ The body of our loop now looks like this:
 
 Here, our implementation really no longer looks like our specification: to
 implicitly build the string when j is both divisible by 3 and 5 means we never
-actually ever check divisibility by 15, for instance.  This sort of code
-refactoring is always a dangerous process - there's always a chance that your
-modifications actually changed the program semantics, and if your test suite
-isn't comprehensive then maybe you've introduced a bug.  
+actually ever check divisibility by 15, and the spec says nothing about our
+new `curr_modified` boolean, for instance.  This sort of code refactoring is
+always a dangerous process - there's always a chance that your modifications
+actually changed the program semantics, and if your test suite isn't
+comprehensive then maybe you've introduced a bug.  
 
 The good news is that Dafny can still prove that this gnarlier implementation
 satisfies our existing set of straightforward postconditions and loop
