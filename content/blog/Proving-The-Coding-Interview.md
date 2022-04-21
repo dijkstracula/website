@@ -57,7 +57,7 @@ out:
 
 ```
 First, construct a list of strings of length `n`, such that the following hold
-for all indexes `i` from 0 to n-1:
+for all indexes `i` from 0 to n:
 
 1) If i is a multiple of 3 (but not of 5) then the `i`th element equals "fizz";
 2) If i is a multiple of 5 (but not of 3) then the `i`th element equals "buzz";
@@ -88,12 +88,12 @@ associated with an object - since it doesn't make sense to use classes for this
 particular problem these ones won't be.
 
 {{< manualcode >}}
-</span></span><span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
-<span class="line"><span class="cl"><span class="p">{</span>
+<span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
+</span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">ret</span> <span class="o">:=</span> <span class="kc">new</span> <span class="kc">string</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span> <span class="c1">// the `ret` variable is the one returned to the caller.
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Main</span><span class="p">()</span> 
+</span></span><span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Main</span><span class="p">()</span>
 </span></span><span class="line"><span class="cl"><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="kc">var</span> <span class="nx">n</span> <span class="o">:=</span> <span class="nx">100</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="kc">var</span> <span class="nx">fb</span> <span class="o">:=</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">);</span>
@@ -104,14 +104,14 @@ particular problem these ones won't be.
 </span></span><span class="line"><span class="cl">        <span class="kc">print</span><span class="p">(</span><span class="nx">fb</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">+</span> <span class="s2">&#34;\n&#34;</span><span class="p">);</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">i</span> <span class="o">:=</span> <span class="nx">i</span> <span class="o">+</span> <span class="nx">1</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">    <span class="p">}</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span>
 {{< /manualcode >}}
 
 
-Even though this code doesn't do much yet, the Dafny compiler complains about
-two potential problems.  See if you can spot one of the issues before
-continuing - I'll give you a hint: it involves allocating the array of
-strings...
+Already the Dafny compiler complains about two potential problems.  See if you
+can spot one of the issues before continuing - I'll give you a hint: it
+involves allocating the array of strings...
 
 ## Adding pre- and post-conditions
 
@@ -145,7 +145,8 @@ when the function is called:
 </span></span><span class="line"><span class="cl"><span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>         <span class="c1">// On entry, the caller of Fizzbuzz() needs to know that n is nonnegative
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">ret</span> <span class="o">:=</span> <span class="kc">new</span> <span class="nx">array</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span>
 {{< /manualcode >}}
 
 
@@ -159,8 +160,8 @@ would no longer be true.
 ### Postconditions ensure that things are true
 
 The second error is more subtle: Back in our `Main()` method, our while-loop
-indexes into the array returned by `Fizzbuzz()` on the interval `[0, n)`.  The
-other error that Dafny gives us is:
+indexes into the array returned by `Fizzbuzz()` on the interval `[0, n)` (that
+is, from 0 to but not including `n`).  The other error that Dafny gives us is:
 
 
 ```bash
@@ -175,9 +176,9 @@ This isn't saying that the index is _necessarily_ out of range, but rather that
 Dafny isn't sure how the length of the array relates to the loop variable.
 Thinking about it a bit deeper: We've implicitly made an assumption with the
 array that `Fizzbuzz()` returned: namely, that it's long enough for us to loop
-over from `0` to `n-1`!  Think about all the times you've assumed something
-about the length of an array only to find you were wrong!  Dafny won't let you
-make that mistake here.
+over from `0` to `n`!  Think about all the times you've assumed something about
+the length of an array only to find you were wrong!  Dafny won't let you make
+that mistake here.
 
 But it's not hard to stare at this code for a minute and convince ourselves
 that the returned array is of length `n` and to conclude that, as before,
@@ -188,11 +189,12 @@ the output array's length.
 
 {{< manualcode >}}
 <span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>         <span class="c1">// On entry, the caller of Fizzbuzz() needs to know that n is nonnegative
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kc">ensures</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">Length</span> <span class="c1">// On return, Fizzbuzz() promises the caller that the length matches the input
+</span></span><span class="line"><span class="cl">    <span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>         <span class="c1">// On entry, the caller of Fizzbuzz() needs to know that n is nonnegative
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kc">ensures</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">Length</span> <span class="c1">// On return, Fizzbuzz() promises the caller that the length matches the input
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">ret</span> <span class="o">:=</span> <span class="kc">new</span> <span class="nx">array</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span>
-</span></span><span class="line"><span class="cl"><span class="p">}</span></span></span>
+</span></span><span class="line"><span class="cl"><span class="p">}</span>
+</span></span>
 {{< /manualcode >}}
 
 If we screwed up and returned, say, an array of length `n-1` or `n+1` or `42`
@@ -280,13 +282,13 @@ see what Dafny tells us when we try to compile it:
 
 {{< manualcode >}}
 <span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">Length</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">Length</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span>              <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//ensures forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i // TODO
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span>              <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//ensures forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i // TODO
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">ret</span> <span class="o">:=</span> <span class="kc">new</span> <span class="kc">string</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">    <span class="c1">//TODO: return a list of strings `ret` such that
@@ -324,25 +326,25 @@ four distinct cases to handle, I'll have four distinct if/else statements.
 
 {{< manualcode >}}
 <span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">Length</span>
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>      <span class="c1">// 1.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>      <span class="c1">// 2.
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span>              <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>  <span class="c1">// 3.
-</span></span></span><span class="line"><span class="cl"><span class="c1">//ensures forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i         // 4.
+</span></span><span class="line"><span class="cl">    <span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">Length</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>      <span class="c1">// 1.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>      <span class="c1">// 2.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span>              <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>  <span class="c1">// 3.
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="c1">//ensures forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i         // 4.
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">ret</span> <span class="o">:=</span> <span class="kc">new</span> <span class="kc">string</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="kc">var</span> <span class="nx">j</span> <span class="o">:=</span> <span class="nx">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kc">while</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span> 
+</span></span><span class="line"><span class="cl">    <span class="kc">while</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;fizz&#34;</span><span class="p">;</span> <span class="c1">// Part 1. of the spec
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;buzz&#34;</span><span class="p">;</span> <span class="c1">// Part 2. of the spec
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;fizzbuzz&#34;</span><span class="p">;</span> <span class="c1">// Part 3. of the spec
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;TODO: convert j to a string&#34;</span><span class="p">;</span> <span class="c1">// Part 4. of the spec (not yet handled)
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">j</span> <span class="o">:=</span> <span class="nx">j</span> <span class="o">+</span> <span class="nx">1</span><span class="p">;</span>
@@ -377,12 +379,12 @@ statement that is true in the following cases:
 * Upon entering the loop body on _every_ loop iteration;
 * After exiting the loop body for the last time.
 
-What can we say about the values in the array at the beginning of every loop
-iteration?  Well, all the elements from 0 up to (but not including) `j` are
-filled in with the right value, from previous loop iterations.  For example,
-when `j == 5`, we know that elements 0, 1, 2, 3, and 4 have their correct
-values.  And of course, at the end of that iteration, so too will element 5,
-which sets us up for the next time 'round.
+What can we say about the values in the array when the loop guard is true and
+we enter the loop body?  Well, all the elements from 0 to `j` are filled in
+with the right value from previous loop iterations.  For example, when `j ==
+5`, we know that elements 0, 1, 2, 3, and 4 have their correct values.  And of
+course, at the end of that iteration, so too will element 5, which sets us up
+for the next time 'round.
 
 
 ```
@@ -390,59 +392,60 @@ which sets us up for the next time 'round.
     +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
 ret | x | x | x | x | x |   |   |   |   |   |   |   |   |   |   |   |
     +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-    \------------------/  ^
-      fizzbuzz values     |
-       are filled in      j == 5: this element will be filled in by the
-                                  end of the current loop iteration...
+    \------------------/^
+      fizzbuzz values   |
+       are filled in    j == 5: this element will be filled in by the
+                                end of the current loop iteration...
 ```
 
 And what can we say when we exit the loop body for the last time?  Well, `j ==
-n`, so by a similar argument, all elements from 0 up to (but not including n)
-are filled in with the right value, from previous loop iterations.  Hey, that's
-the entire array, which is the thing we wanted!
+n`, so by a similar argument, all elements from 0 to `n` are filled in with
+the right value, from previous loop iterations.  Hey, that's the entire array,
+which is the thing we wanted!
 
 ```
       0   1   2   3   4   5   6   7   8   9  10  11  12  13  14  15
     +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
 ret | x | x | x | x | x | x | x | x | x | x | x | x | x | x | x | x |
     +---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+---+
-    \---------------------------------------------------------------/ ^
-                fizzbuzz values are filled in!                        |
-                                                                      j == 16
+    \--------------------------------------------------------------/^
+                fizzbuzz values are filled in!                      |
+                                                                    j == 16
 ```
+
 So, our loop invariants will actually match very closely our postconditions:
-instead of saying "for all elements from 0 to _the end of the list_, the
+instead of saying "for all elements indexed from 0 to _the size of the list_, the
 following statements are true", we only have to say "the following statements
-are true for all elements from _0 up to our loop counter_": With one more
+are true for all elements from _0 to our loop counter_": With one more
 tiny assertion to remind Dafny that our loop counter will never exceed `n`, our
 final specification and implementation looks as follows:
 
 {{< manualcode >}}
 <span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">Length</span>
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>
-</span></span><span class="line"><span class="cl"><span class="c1">//ensures forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i
+</span></span><span class="line"><span class="cl">    <span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="nx">n</span> <span class="o">==</span> <span class="nx">ret</span><span class="p">.</span><span class="nx">Length</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="kc">ensures</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">n</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span>              <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>
+</span></span><span class="line"><span class="cl">    <span class="c1">//ensures forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">ret</span> <span class="o">:=</span> <span class="kc">new</span> <span class="kc">string</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl">
 </span></span><span class="line"><span class="cl">    <span class="kc">var</span> <span class="nx">j</span> <span class="o">:=</span> <span class="nx">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kc">while</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span> 
-</span></span><span class="line"><span class="cl">    <span class="kc">invariant</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">j</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">n</span> <span class="c1">// Another one of those &#34;obvious&#34; facts that Dafny needs to be told explicitly
-</span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span>              <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">//invariant forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i
+</span></span><span class="line"><span class="cl">    <span class="kc">while</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">invariant</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">j</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">n</span> <span class="c1">// Another one of those &#34;obvious&#34; facts that Dafny needs to be told explicitly
+</span></span></span><span class="line"><span class="cl"><span class="c1"></span>        <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span>              <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//invariant forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;fizz&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;buzz&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;fizzbuzz&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;TODO: convert j to a string&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">j</span> <span class="o">:=</span> <span class="nx">j</span> <span class="o">+</span> <span class="nx">1</span><span class="p">;</span>
@@ -473,9 +476,9 @@ school is that, generally, the only classes that would make me write exams
 are the ones I wouldn't want to take anyway.  Let's imagine my nerves had
 gotten the better of me and that I'd made a silly mistake in my implementation:
 here's a mistake I make figuratively-literally every time I write a
-`while`-loop: I simply forget to bump the loop counter.  If I take out that `j
-:= j + 1` statement and recompile, Dafny tells us that it isn't sure that our
-loop will ever actually terminate:
+`while`-loop: I simply forget to bump the loop counter so my program hangs
+forever.  If I take out that `j := j + 1` statement and recompile, Dafny tells
+us that it isn't sure that our loop will ever actually terminate:
 
 ```bash
 $ Dafny Fizzbuzz.dfy
@@ -484,17 +487,20 @@ Dafny program verifier finished with 10 verified, 1 error
 $
 ```
 
-(A `decreases` clause helps Dafny understand how, at each iteration of the
+A `decreases` clause helps Dafny understand how, at each iteration of the
 loop, the loop counter is getting "closer" to the loop's termination condition.
-For us, our decreases clause would be `n - j` (since the loop terminates when
-`n - j == 0`), but Dafny has become good enough at figuring this out for simple
-loops that we usually don't need to state it explicitly.)
+For us, our clause would be `decreases n - j`, since at each iteration that
+expression becomes smaller (since `j` becomes bigger!), and the loop never
+iterates when `n - j <= 0`.  Dafny has become good enough at infering this
+clause out for simple loops that we usually don't need to state it explicitly.
+In this case, the problem isn't that we've not explained to Dafny why our loop
+eventually terminates - we wrote the loop wrong and it doesn't!
 
 Already we can see that Dafny is checking more powerful program properties than
 our business logic: it will complain if it isn't convinced that our program
-will even terminate!  (And, no, this doesn't circumvent the Halting Problem:
-deciding termination in general-purpose programming languages is [an area of
-active
+will ultimately terminate!  (And, no, this doesn't circumvent the Halting
+Problem: deciding termination in general-purpose programming languages is [an
+area of active
 research](https://swt.informatik.uni-freiburg.de/berit/papers/termination-proofs....pdf).)
 
 ### Counterexample generation
@@ -506,13 +512,13 @@ loop body instead - can you spot the error?
 <span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
 </span></span><span class="line"><span class="cl"><span class="p">...</span>
 </span></span><span class="line"><span class="cl">    <span class="p">{</span>
-</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;fizz&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;buzz&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;fizzbuzz&#34;</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;TODO: convert j to a string&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">j</span> <span class="o">:=</span> <span class="nx">j</span> <span class="o">+</span> <span class="nx">1</span><span class="p">;</span>
@@ -592,12 +598,12 @@ The body of our loop now looks like this:
 
 {{< manualcode >}}
 <span class="line"><span class="cl">    <span class="kc">var</span> <span class="nx">j</span> <span class="o">:=</span> <span class="nx">0</span><span class="p">;</span>
-</span></span><span class="line"><span class="cl">    <span class="kc">while</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span> 
-</span></span><span class="line"><span class="cl">    <span class="kc">invariant</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">j</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">n</span>
-</span></span><span class="line"><span class="cl">    <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span>              <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>
-</span></span><span class="line"><span class="cl">    <span class="c1">//invariant forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i
+</span></span><span class="line"><span class="cl">    <span class="kc">while</span> <span class="nx">j</span> <span class="o">&lt;</span> <span class="nx">n</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">invariant</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">j</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">n</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizz&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">!=</span> <span class="nx">0</span> <span class="o">&amp;&amp;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;buzz&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">invariant</span> <span class="kc">forall</span> <span class="nx">i</span> <span class="p">::</span> <span class="nx">0</span> <span class="o">&lt;</span><span class="p">=</span> <span class="nx">i</span> <span class="o">&lt;</span> <span class="nx">j</span> <span class="o">==&gt;</span> <span class="nx">i</span> <span class="o">%</span> <span class="nx">15</span> <span class="o">==</span> <span class="nx">0</span>              <span class="o">==&gt;</span> <span class="nx">ret</span><span class="p">[</span><span class="nx">i</span><span class="p">]</span> <span class="o">==</span> <span class="s2">&#34;fizzbuzz&#34;</span>
+</span></span><span class="line"><span class="cl">        <span class="c1">//invariant forall i :: 0 &lt;= i &lt; n ==&gt; i % 3 != 0 &amp;&amp; i % 5 != 0 ==&gt; ret[i] == i
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span>    <span class="p">{</span>
 </span></span><span class="line"><span class="cl">        <span class="kc">var</span> <span class="nx">curr</span> <span class="p">:</span> <span class="kc">string</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">curr</span> <span class="o">:=</span> <span class="s2">&#34;&#34;</span><span class="p">;</span>
@@ -605,16 +611,16 @@ The body of our loop now looks like this:
 </span></span><span class="line"><span class="cl">        <span class="kc">var</span> <span class="nx">curr_modified</span> <span class="p">:</span> <span class="nx">bool</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="nx">curr_modified</span> <span class="o">:=</span> <span class="kc">false</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span> 
+</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">3</span> <span class="o">==</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">curr</span> <span class="o">:=</span> <span class="nx">curr</span> <span class="o">+</span> <span class="s2">&#34;fizz&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">curr_modified</span> <span class="o">:=</span> <span class="kc">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
-</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="p">(</span><span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="nx">j</span> <span class="o">%</span> <span class="nx">5</span> <span class="o">==</span> <span class="nx">0</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">curr</span> <span class="o">:=</span> <span class="nx">curr</span> <span class="o">+</span> <span class="s2">&#34;buzz&#34;</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">curr_modified</span> <span class="o">:=</span> <span class="kc">true</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span>
 </span></span><span class="line"><span class="cl">
-</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="p">(</span><span class="nx">curr_modified</span><span class="p">)</span> <span class="p">{</span>
+</span></span><span class="line"><span class="cl">        <span class="kc">if</span> <span class="nx">curr_modified</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="nx">curr</span><span class="p">;</span>
 </span></span><span class="line"><span class="cl">        <span class="p">}</span> <span class="kc">else</span> <span class="p">{</span>
 </span></span><span class="line"><span class="cl">            <span class="nx">ret</span><span class="p">[</span><span class="nx">j</span><span class="p">]</span> <span class="o">:=</span> <span class="s2">&#34;TODO: convert j to a string&#34;</span><span class="p">;</span>
@@ -625,20 +631,20 @@ The body of our loop now looks like this:
 </span></span>
 {{< /manualcode >}}
 
-
-Here, our implementation really no longer looks like our specification: to
-implicitly build the string when j is both divisible by 3 and 5 means we never
-actually ever check divisibility by 15, and the spec says nothing about our
-new `curr_modified` boolean, for instance.  This sort of code refactoring is
-always a dangerous process - there's always a chance that your modifications
-actually changed the program semantics, and if your test suite isn't
-comprehensive then maybe you've introduced a bug.  
+Here, our implementation really no longer looks like our specification.  To
+mutably build the string when j is divisible by 3 and/or 5 means we never
+explicitly check divisibility by 15.  Also, we created a new `curr_modified`
+piece of state, but our spec says nothing about it existing.  This sort of code
+refactoring is always a dangerous process - there's always a chance that your
+modifications actually changed the program semantics, and if your test suite
+isn't comprehensive then maybe you've introduced a bug.  
 
 The good news is that Dafny can still prove that this gnarlier implementation
-satisfies our existing set of straightforward postconditions and loop
-invariants!  And if we got it wrong -- say, if I wrote `else if (j % 5 == 0)`
--- then the compiler would tell us that we broke our solution and we could ask
-it for a counterexample!
+satisifes our existing set of straighgforward postconditions and loop
+invariants!  And if we got it wrong -- say, if I wrote `else if j % 5 == 0` or
+swapped the order that the two modulus checks execute -- then the compiler
+would tell us that we broke our solution and we could ask it for a
+counterexample!
 
 ## The home stretch...or are we?
 
@@ -689,10 +695,10 @@ interview question in its own right!!
 ## Your turn - modify the spec
 
 Eagle-eyed readers may notice that our specification of fizzbuzz slightly
-deviates from the standard one: typically, `Fizzbuzz(n)` iterates on `[1, n+1)`,
-so the beginning lines read "1", "2", "fizz", and so on, but we iterate from
-`[0, n)`, so our final implementation will begin with "fizzbuzz", "1", "2", ...
-Why not try installing Dafny (there's a good installation guide
+deviates from the standard one: typically, `Fizzbuzz(n)` iterates on `[1, n]`,
+so the beginning lines read "1", "2", "fizz", and so on.  We instead iterate
+from `[0, n)`, so our final implementation will begin with "fizzbuzz", "1",
+"2", ...  Why not try installing Dafny (there's a good installation guide
 [here](https://www.cs.utexas.edu/~bornholt/courses/cs395t-22sp/homework/hw4/))
 and try your hand at changing first the specification, then the implementation?
 If you do, [let me know how it went for you](https://twitter.com/ntalyour).
@@ -701,6 +707,7 @@ If you do, [let me know how it went for you](https://twitter.com/ntalyour).
 
 Thanks to
 [Scott Andreas](https://twitter.com/cscotta/),
+[Rustan Leino](http://leino.science),
 [Brian Lin](https://twitter.com/linteriscoming),
 [Kelly Shortridge](https://twitter.com/swagitda_),
 Paul Vanetti,

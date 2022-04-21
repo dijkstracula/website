@@ -21,9 +21,9 @@ theme = 'researcher'
     custom_css = [""]
 
 [params.style]  # appearance options (can be omitted)
-    fontFamily = "Inconsolata"
+    fontFamily = ["Carlito", "Helvetica", "Arial", "sans-serif"]
     fontSize = "12pt"
-    pageWidth = "800px"
+    pageWidth = "1000px"
     avatarSize = "250px"
     colorBlack = "#222222"
     colorRed = "#dc3545"
