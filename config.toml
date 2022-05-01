@@ -31,9 +31,9 @@ theme = 'researcher'
 
 [menu]
     [[menu.main]]
-    name = "About"
-    url = "/about"
-    weight = 1
+    #name = "About"
+    #url = "/about"
+    #weight = 1
     [[menu.main]]
     name = "News"
     url = "/blog"

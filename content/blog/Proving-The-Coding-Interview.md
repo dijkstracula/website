@@ -142,7 +142,7 @@ when the function is called:
 
 {{< manualcode >}}
 <span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
-</span></span><span class="line"><span class="cl"><span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>         <span class="c1">// On entry, the caller of Fizzbuzz() needs to know that n is nonnegative
+</span></span><span class="line"><span class="cl">    <span class="kc">requires</span> <span class="nx">n</span> <span class="o">&gt;=</span> <span class="nx">0</span>         <span class="c1">// On entry, the caller of Fizzbuzz() needs to know that n is nonnegative
 </span></span></span><span class="line"><span class="cl"><span class="c1"></span><span class="p">{</span>
 </span></span><span class="line"><span class="cl">    <span class="nx">ret</span> <span class="o">:=</span> <span class="kc">new</span> <span class="nx">array</span><span class="p">[</span><span class="nx">n</span><span class="p">];</span>
 </span></span><span class="line"><span class="cl"><span class="p">}</span>
@@ -374,17 +374,15 @@ that to Dafny.
 
 To do so, we'll introduce a new kind of logical clause called a _loop
 invariant_.  This is, like an `ensures` or `requires` clause, another logical
-statement that is true in the following cases:
+statement that must be true at the top of each loop iteration (i.e. before the
+loop's guard condition, `j < n`, is checked).
 
-* Upon entering the loop body on _every_ loop iteration;
-* After exiting the loop body for the last time.
-
-What can we say about the values in the array when the loop guard is true and
-we enter the loop body?  Well, all the elements from 0 to `j` are filled in
-with the right value from previous loop iterations.  For example, when `j ==
+What can we say about the values in the array when the loop's guard is true and
+we (re-)enter the loop body?  Well, all the elements from 0 to `j` are filled
+in with the right value from previous loop iterations.  For example, when `j ==
 5`, we know that elements 0, 1, 2, 3, and 4 have their correct values.  And of
 course, at the end of that iteration, so too will element 5, which sets us up
-for the next time 'round.
+for the next time 'round when `j == 6`.
 
 
 ```
@@ -688,9 +686,10 @@ business assuming that it means anything that our implementation conforms to
 that specification](https://www.cs.umd.edu/~gasarch/BLOGPAPERS/social.pdf).
 
 Don't worry, though, we'll close the loop on this gimmick by completing
-`Fizzbuzz()` next post, where we'll have to implement a (verified!) helper
-method to convert a natural number to a string.  Hey, that's not a bad
-interview question in its own right!!
+`Fizzbuzz()` [in the next
+post](https://www.cs.utexas.edu/~ntaylor/blog/proving-2/), where we'll have to
+implement a (verified!) helper method to convert a natural number to a string.
+Hey, that's not a bad interview question in its own right!!
 
 ## Your turn - modify the spec
 
