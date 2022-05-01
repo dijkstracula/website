@@ -13,7 +13,10 @@ article](https://www.cs.utexas.edu/~ntaylor/blog/proving/) we started to verify
 and implement an implementation of Fizzbuzz in the Dafny programming
 language.  But we left off one important piece: Dafny doesn't yet have built-in
 functionality to convert a number value to a string, which we need to complete
-`Fizzbuzz()`'s behaviour.  We'll attempt to write such a conversion today.
+`Fizzbuzz()`'s behaviour.  We'll attempt to write such a conversion today and
+[fix up some implementation
+details](https://www.cs.utexas.edu/~ntaylor/blog/proving-3/) in the next and
+final post.
 
 As it happens, I've _also_ been asked to do this in a programming interview, so
 we're getting two practice problems for the price of one here!
@@ -448,7 +451,7 @@ in a functional language (or, worse, writing proofs on a whiteboard!); it gives
 us loops, mutable structures, and other traditional programming language
 constructs, so why shouldn't we make use of those if we can?
 
-[Next time](https://www.cs.utexas.edu/~ntaylor/blog/proving/), we'll leave
+[Next time](https://www.cs.utexas.edu/~ntaylor/blog/proving-3/), we'll leave
 `ntos()` as it was as a mere `function`.  We'll instead port [a real-world,
 optimised int conversion implementation from another
 language](https://hg.openjdk.java.net/jdk7u/jdk7u6/jdk/file/8c2c5d63a17e/src/share/classes/java/lang/Integer.java#l327)
@@ -463,7 +466,7 @@ your -- yes, your! -- production software like this.
 
 ## Your turn:
 
-Until [next time](https://www.cs.utexas.edu/~ntaylor/blog/proving-3), here are
+Until [next time](https://www.cs.utexas.edu/~ntaylor/blog/proving-3/), here are
 some ideas to get you playing around with some of the things we did today:
 
 * If you're familiar with first-order logic, you might be interested in seeing
