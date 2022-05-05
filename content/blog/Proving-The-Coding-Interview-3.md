@@ -8,6 +8,11 @@ categories: [blog]
 oneliner: Once more, with feeling
 ---
 
+This is the third of a three part series:
+[Part 1](https://www.cs.utexas.edu/~ntaylor/blog/proving/) | 
+[Part 2](https://www.cs.utexas.edu/~ntaylor/blog/proving-2/) |
+Part 3
+
 Welcome back to the final installment of Proving The Coding Interview!  In the
 [previous article](https://www.cs.utexas.edu/~ntaylor/blog/proving-2/) we
 completed our verification of the venerable `Fizzbuzz()` interview question by

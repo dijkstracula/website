@@ -8,6 +8,11 @@ categories: [blog]
 oneliner: "Applying interesting research to uninteresting interview problems"
 ---
 
+This is the first of a three part series:
+Part 1 |
+[Part 2](https://www.cs.utexas.edu/~ntaylor/blog/proving-2/) |
+[Part 3](https://www.cs.utexas.edu/~ntaylor/blog/proving-3/)
+
 Enjoying programming interview questions is one of those things that nobody
 should admit to in polite company.  But as with so many other things in life, a
 good gimmick can make the most tedious chore bearable if not outright pleasant.

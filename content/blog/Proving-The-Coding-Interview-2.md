@@ -8,6 +8,11 @@ categories: [blog]
 oneliner: "toString() 2 furious"
 ---
 
+This is the second of a three part series:
+[Part 1](https://www.cs.utexas.edu/~ntaylor/blog/proving/) |
+Part 2 |
+[Part 3](https://www.cs.utexas.edu/~ntaylor/blog/proving-3/)
+
 Welcome back to Proving the Coding Interview!  In the [previous
 article](https://www.cs.utexas.edu/~ntaylor/blog/proving/) we started to verify
 and implement an implementation of Fizzbuzz in the Dafny programming
