@@ -34,7 +34,7 @@ methodologies?  Does "verified" actually mean anything, anyway?  Should we
 ## Our Problem statement:
 
 As before, let's begin by writing out the concrete problem that we are going to
-solve: 
+solve:
 
 ```
 To convert a number `n` into a string:
@@ -153,12 +153,12 @@ function that returns `"42"` on all inputs would satisfy this postcondition,
 and we definitely wouldn't want to call that a "provably-correct solution".
 
 When many folks first learn about cool things like automated theorem provers or
-type theory, end up with the misconception that the goal is incontrovertible
-and exhaustive program correctness.  Others -- including some who responded
-"vigorously" on certain colour-coded tech link aggregation websites to part 1
-of this series -- dismiss formal methods for the opposite reason.  They end up
-feeling that formal methods _claim_ incontrovertible correctness, which they
-dismiss as impossible.
+type theory, they end up with the misconception that the goal is
+incontrovertible and exhaustive program correctness.  Others -- including some
+who responded "vigorously" on certain colour-coded tech link aggregation
+websites to part 1 of this series -- dismiss formal methods for the opposite
+reason.  They end up feeling that formal methods _claim_ incontrovertible
+correctness, which they dismiss as impossible.
 
 The latter people are right on one point: "total correctness", whatever that
 might mean, is a bar that we shouldn't expect to reach.  We saw this last time:
@@ -265,7 +265,7 @@ have come about because of a tacit assumption like this?
 
 There are ways to make more precise _which of the equivalent strings will be
 generated_, and encode that as part of our specification.  But, let's leave
-that discussion until the very end of the post.  
+that discussion until the very end of the post.
 
 ## How does this tie back into Fizzbuzz()?
 
@@ -300,7 +300,7 @@ post-condition.  We simply left it out, as a result.
 What can `ntos()` buy us here?  Well, the specification for `Fizzbuzz()` ought
 to say that `ret[i]` must be the string representation of `i`, _which we now
 have a way to specify_!  Concretely, our postcondition can state that `ret[i]
-== ntos(i)`! 
+== ntos(i)`!
 
 {{< manualcode >}}
 <span class="line"><span class="cl"><span class="kc">method</span> <span class="nx">Fizzbuzz</span><span class="p">(</span><span class="nx">n</span><span class="p">:</span> <span class="kc">int</span><span class="p">)</span> <span class="kc">returns</span> <span class="p">(</span><span class="nx">ret</span><span class="p">:</span> <span class="nx">array</span><span class="o">&lt;</span><span class="kc">string</span><span class="o">&gt;</span><span class="p">)</span>
@@ -336,7 +336,7 @@ So-called `function method`s can be thought of as methods whose runtime behaviou
 is restricted enough that they can't perform any operation that a `function`
 couldn't, like mutate state.  Since `ntos()` is side effect-free and only
 computes a return value, we can mark it as a `function method` and Dafny will
-let us both use it in both specifications and implementations.
+let us use it in both specifications and implementations.
 
 
 {{< manualcode >}}
@@ -429,7 +429,7 @@ calls with expected outputs; we did that this time when trying to concoct a
 general lemma for `ntos()`'s relationship to `ston()`, for instance.
 
 Yes, it's true that most languages don't have compile-time invariant checks,
-nor pre- and post-condition clauses.  That's okay, though - nothing stopping 
+nor pre- and post-condition clauses.  That's okay, though - nothing stopping
 you from simply writing those as at-runtime `assert()` statements, or even just
 informal comment blocks.  Jon Bentley's [articles on writing correct code](https://www.cs.tufts.edu/~nr/cs257/archive/jon-bentley/correct-programs.pdf), which he collated into his book
 Programming Pearls, has great examples of stating invariants in comment blocks
@@ -443,7 +443,8 @@ a similar dialogue between the programmer and interviewer.  And if you're
 interviewing at a more forward-thinking company where you're given an actual
 text editor and unit test suite to pass, if you write them as `assert()`s
 you'll at least have runtime failures.  Those assertion failures will also
-likely closer to where the bug lies, giving you a leg up on fixing the issue.
+likely occur closer to where the bug lies, giving you a leg up on fixing the
+issue.
 
 ## Next time: a more realistic `ntos()`!
 
