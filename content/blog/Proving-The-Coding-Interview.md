@@ -643,7 +643,7 @@ modifications actually changed the program semantics, and if your test suite
 isn't comprehensive then maybe you've introduced a bug.  
 
 The good news is that Dafny can still prove that this gnarlier implementation
-satisifes our existing set of straighgforward postconditions and loop
+satisfies our existing set of straightforward postconditions and loop
 invariants!  And if we got it wrong -- say, if I wrote `else if j % 5 == 0` or
 swapped the order that the two modulus checks execute -- then the compiler
 would tell us that we broke our solution and we could ask it for a
